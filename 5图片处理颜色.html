@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      canvas {
+        display: block;
+        margin: 50px auto;
+        border: 2px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+    <script>
+      const canvas = document.querySelector('canvas');
+      const ctx = canvas.getContext('2d', {
+        willReadFrequently: true,
+      });
+      let stack = [];
+      const init = () => {
+        const img = new Image();
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+        };
+        img.src = './2.png';
+      };
+
+      init();
+
+      canvas.addEventListener('click', e => {
+        const x = e.offsetX;
+        const y = e.offsetY;
+        const i = point2Index(x, y);
+        // // 取出点击位置的像素点颜色
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const clickColor = getColor(x, y, imageData);
+        const greenColor = [0, 255, 0, 255];
+        let isContinue = true;
+        const _changeColor = (x, y) => {
+          if (stack.some(item => item[0] === x && item[1] === y)) {
+            return;
+          }
+          stack.push([x, y]);
+          if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height) return;
+          const currentColor = getColor(x, y, imageData);
+          if (diff(currentColor, clickColor) > 100) {
+            return;
+          }
+          if (diff(currentColor, greenColor) === 20) {
+            return;
+          }
+          const i = point2Index(x, y);
+          imageData.data.set(greenColor, i);
+          _changeColor(x + 1, y);
+          _changeColor(x - 1, y);
+          _changeColor(x, y + 1);
+          _changeColor(x, y - 1);
+        };
+        _changeColor(x, y);
+        ctx.putImageData(imageData, 0, 0);
+      });
+
+      function point2Index(x, y) {
+        return (y * canvas.width + x) * 4;
+      }
+      function getColor(x, y, imageData) {
+        const i = point2Index(x, y);
+        return [
+          imageData.data[i],
+          imageData.data[i + 1],
+          imageData.data[i + 2],
+          imageData.data[i + 3],
+        ];
+      }
+
+      function diff(color1, color2) {
+        return (
+          Math.abs(color1[0] - color2[0]) +
+          Math.abs(color1[1] - color2[1]) +
+          Math.abs(color1[2] - color2[2]) +
+          Math.abs(color1[3] - color2[3])
+        );
+      }
+    </script>
+  </body>
+</html>
