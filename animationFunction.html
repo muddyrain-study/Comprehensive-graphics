@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        margin: 50px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>9999.99元</h1>
+      <div>
+        <button>开始秒杀</button>
+      </div>
+    </div>
+    <script>
+      const h1 = document.querySelector('h1');
+      const button = document.querySelector('button');
+
+      function animation(duration, from, to, onProgress) {
+        const range = to - from;
+        const speed = range / duration;
+        const startTime = Date.now();
+        let value = from;
+        onProgress(value);
+        function _run() {
+          const now = Date.now();
+          const passedTime = now - startTime;
+          value = from + speed * passedTime;
+          onProgress(value);
+          if (passedTime >= duration) {
+            value = to;
+            onProgress(value);
+            return;
+          }
+          requestAnimationFrame(_run);
+        }
+        requestAnimationFrame(_run);
+      }
+
+      const getRandomNumber = (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min + 1);
+      };
+      button.onclick = () => {
+        animation(
+          2000,
+          getRandomNumber(500, 10000),
+          getRandomNumber(500, 10000),
+          e => {
+            h1.innerHTML = e.toFixed(2) + '元';
+          }
+        );
+      };
+    </script>
+  </body>
+</html>
