@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <video src="../1.mp4" controls muted></video>
+    <div class="box">
+      <button class="btn">开启声音</button>
+    </div>
+    <script>
+      let video = document.querySelector('video');
+      let btn = document.querySelector('.btn');
+      let box = document.querySelector('.box');
+
+      async function play() {
+        video.muted = true;
+        video.play();
+        const ctx = new AudioContext();
+        const canAutoPlay = ctx.state === 'running';
+        ctx.close();
+        if (canAutoPlay) {
+          video.muted = false;
+          box.style.display = 'none';
+          btn.removeEventListener('click', play);
+        } else {
+          box.style.display = 'flex';
+          btn.addEventListener('click', play);
+        }
+      }
+      video.oncanplay = () => {
+        play();
+      };
+    </script>
+  </body>
+</html>
