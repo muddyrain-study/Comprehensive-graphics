@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      canvas {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+      }
+      audio {
+        margin-top: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+    <audio src="../梦的光点-王心凌.mp3" controls></audio>
+    <script>
+      let canvas = document.querySelector('canvas');
+      let ctx = canvas.getContext('2d');
+      let audioEl = document.querySelector('audio');
+      function init() {
+        const size = 500;
+        canvas.width = size * devicePixelRatio;
+        canvas.height = size * devicePixelRatio;
+        canvas.style.width = ctx.style.height = `${size}px`;
+      }
+      function draw() {}
+      init();
+
+      draw(new Array(100).fill(0), 255);
+    </script>
+  </body>
+</html>
