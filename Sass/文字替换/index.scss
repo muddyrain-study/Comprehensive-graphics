@@ -1,0 +1,60 @@
+html {
+  background: orange;
+  height: 100%;
+}
+
+body {
+  background: radial-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%) center top/cover;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  box-sizing: border-box;
+}
+
+$words :"be a",
+"be b",
+"be c",
+"be d",
+"be e",
+"be f",
+"be g",
+"be h",
+"be i",
+"be j",
+"be k",
+"be l",
+"be m",
+"be n",
+"be o",
+"be p",
+"be q",
+"be r",
+"be s",
+"be t",
+"be u",
+"be v",
+"be w",
+"be x",
+"be y",
+"be z";
+
+
+$max :1910px;
+
+.be::after {
+  content: 'be a';
+  font-size: 10vw;
+  color: #ffffff;
+  text-shadow: 1px 1px 4px #333;
+  text-transform: uppercase;
+
+  @each $word in $words {
+    @media screen and (max-width: $max) {
+      content: '#{$word}';
+    }
+
+    $max: $max - 50px;
+  }
+}

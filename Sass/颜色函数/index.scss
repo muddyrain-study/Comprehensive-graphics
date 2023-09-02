@@ -1,0 +1,37 @@
+@use "sass:color";
+
+$btnColors: #409eff,
+  #67c23a,
+  #e6a23c,
+  #f56c6c,
+  #909399;
+
+.btn {
+  padding: 10px 20px;
+  outline: none;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@for $i from 1 through length($btnColors) {
+  .btn.type-#{$i} {
+    $color: nth($btnColors, $i);
+    background: $color;
+    color: #fff;
+
+    &:hover {
+      background: lighten($color: $color, $amount: 15%);
+    }
+
+    &:active {
+      background: darken($color: $color, $amount: 10%);
+    }
+
+    &:disabled {
+      background: lighten($color: $color, $amount: 20%);
+      color: lighten($color: $color, $amount: 40%);
+      cursor: not-allowed;
+    }
+  }
+}
