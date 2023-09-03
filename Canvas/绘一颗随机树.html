@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        background: #93b5ad;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+    <script>
+      const canvas = document.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+      const init = () => {
+        canvas.width = window.innerWidth * devicePixelRatio;
+        canvas.height = window.innerHeight * devicePixelRatio;
+      };
+      init();
+      ctx.translate(canvas.width / 2, canvas.height);
+      ctx.scale(1, -1);
+
+      drawBranch([0, 0], 30, 200, 90);
+      /**
+       * 绘制一颗随机树
+       * @param {Array} v0 起始点
+       * @param {Number} thick 线条粗细
+       * @param {Number} length 线条长度
+       * @param {Number} dir 线条方向角度
+       */
+
+      function drawBranch(v0, thick, length, dir) {
+        if (thick < 10 && Math.random() < 0.3) return;
+        if (thick < 2) {
+          ctx.beginPath();
+          ctx.fillStyle = Math.random() < 0.5 ? '#fe2c55' : '#ffffff';
+          ctx.arc(v0[0], v0[1], 5, 0, Math.PI * 2);
+          ctx.fill();
+          return;
+        }
+        ctx.beginPath();
+        ctx.moveTo(v0[0], v0[1]);
+        const v1 = [
+          v0[0] + length * Math.cos((dir * Math.PI) / 180),
+          v0[1] + length * Math.sin((dir * Math.PI) / 180),
+        ];
+        ctx.lineTo(v1[0], v1[1]);
+        ctx.strokeStyle = '#333';
+        ctx.lineCap = 'round';
+        ctx.lineWidth = thick;
+        ctx.stroke();
+        // 递归绘制左右两颗树
+        drawBranch(v1, thick * 0.8, length * 0.8, dir + Math.random() * 40);
+        drawBranch(v1, thick * 0.8, length * 0.8, dir - Math.random() * 40);
+      }
+    </script>
+  </body>
+</html>
