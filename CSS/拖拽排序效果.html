@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .list {
+      margin: 150px auto;
+      width: 640px;
+    }
+
+    .list .list-item {
+      width: 100%;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background: orange;
+      padding: 20px 0px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .list-item.moving {
+      background: transparent;
+      color: transparent;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="list">
+    <div draggable="true" class="list-item">1</div>
+    <div draggable="true" class="list-item">2</div>
+    <div draggable="true" class="list-item">3</div>
+    <div draggable="true" class="list-item">4</div>
+    <div draggable="true" class="list-item">5</div>
+  </div>
+  <script src="../utils/flip.js"></script>
+  <script>
+    const list = document.querySelector(".list")
+    let sourceNode;
+    let flip;
+    list.ondragstart = e => {
+      e.target.classList.add("moving")
+      sourceNode = e.target
+      e.dataTransfer.effectAllowed = "move"
+      flip = new Flip(list.children, 0.3)
+    }
+
+    list.ondragover = e => {
+      e.preventDefault()
+    }
+    list.ondragenter = e => {
+      e.preventDefault()
+      if (e.target === list || e.target === sourceNode) {
+        return
+      }
+      const children = Array.from(list.children)
+      const sourceIndex = children.indexOf(sourceNode)
+      const targetIndex = children.indexOf(e.target)
+      if (sourceIndex < targetIndex) {
+        list.insertBefore(sourceNode, e.target.nextElementSibling)
+      } else {
+        list.insertBefore(sourceNode, e.target)
+      }
+      flip.play()
+    }
+    list.ondragend = e => {
+      e.target.classList.remove("moving")
+    }
+  </script>
+</body>
+
+</html>
