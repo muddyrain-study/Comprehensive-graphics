@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #c1 {
+      fill: #fac;
+      stroke: skyblue;
+      stroke-dashoffset: 0;
+
+      stroke-width: 2;
+      transition: all 1s linear;
+    }
+
+    #c2 {
+      fill: #f00;
+      stroke: #ff0;
+      stroke-dashoffset: 0;
+      stroke-width: 2;
+      transition: all 1s linear;
+    }
+  </style>
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="750" height="750" style="border:#aaa solid">
+    <g>
+      <path d="M0 10 H100 M0 20 H100 M0 30 H100 M0 40 H100 M0 50 H100 M0 60 H100 M0 70 H100 M0 80 H100 M0 90 H100
+                    M10 0 V100 M20 0 V100 M30 0 V100 M40 0 V100 M50 0 V100 M60 0 V100 M70 0 V100 M80 0 V100 M90 0 V100"
+        stroke="#aaa" stroke-width=".2" fill="none" />
+      <text x="0" y="3" font-size="3">0</text>
+      <text x="8" y="3" font-size="3">10</text>
+      <text x="18" y="3" font-size="3">20</text>
+      <text x="28" y="3" font-size="3">30</text>
+      <text x="38" y="3" font-size="3">40</text>
+      <text x="48" y="3" font-size="3">50</text>
+      <text x="58" y="3" font-size="3">60</text>
+      <text x="68" y="3" font-size="3">70</text>
+      <text x="78" y="3" font-size="3">80</text>
+      <text x="88" y="3" font-size="3">90</text>
+      <text y="11" x="0" font-size="3">10</text>
+      <text y="21" x="0" font-size="3">20</text>
+      <text y="31" x="0" font-size="3">30</text>
+      <text y="41" x="0" font-size="3">40</text>
+      <text y="51" x="0" font-size="3">50</text>
+      <text y="61" x="0" font-size="3">60</text>
+      <text y="71" x="0" font-size="3">70</text>
+      <text y="81" x="0" font-size="3">80</text>
+      <text y="91" x="0" font-size="3">90</text>
+    </g>
+
+    <path id="c1" d="M20 50 A30 30 0 0 1 80 50 A30 30 0 0 1 20 50" />
+    <circle id="c2" cx="50" cy="50" r="15" style="" />
+  </svg>
+  <script>
+    const colors = ['#caf', '#fac', 'blueviolet', 'skyblue',]
+    {
+      const c1 = document.querySelector('#c1')
+      const length1 = c1.getTotalLength()
+      c1.setAttribute("stroke-dasharray", length1)
+
+      c1.style.fill = "#caf"
+      c1.style.stroke = "blueviolet"
+
+      c1.style.strokeDashoffset = length1
+
+      let fillIndex = 0
+      let strokeIndex = 2
+      c1.ontransitionend = function (e) {
+        if (e.propertyName === "fill") {
+          fillIndex = fillIndex === 0 ? 1 : 0
+          c1.style.fill = colors[fillIndex]
+        }
+        if (e.propertyName === "stroke") {
+          strokeIndex = strokeIndex === 2 ? 3 : 2
+          c1.style.stroke = colors[strokeIndex]
+        }
+        if (e.propertyName === "stroke-dashoffset") {
+          c1.style.strokeDashoffset = c1.style.strokeDashoffset * 1 + length1 * 1
+        }
+      }
+    }
+    {
+      const c1 = document.querySelector('#c2')
+      const length1 = c1.getTotalLength()
+      c1.setAttribute("stroke-dasharray", length1)
+
+      c1.style.strokeDashoffset = length1
+
+      c1.ontransitionend = function (e) {
+        if (e.propertyName === "stroke-dashoffset") {
+          c1.style.strokeDashoffset = c1.style.strokeDashoffset * 1 + length1 * 1
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
