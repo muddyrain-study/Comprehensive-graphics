@@ -1,0 +1,152 @@
+html {
+  background: orange;
+  height: 100%;
+}
+
+body {
+  background: radial-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%) center top/cover;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  box-sizing: border-box;
+}
+
+.be::after {
+  content: "be a";
+  font-size: 10vw;
+  color: #ffffff;
+  text-shadow: 1px 1px 4px #333;
+  text-transform: uppercase;
+}
+@media screen and (max-width: 1910px) {
+  .be::after {
+    content: "be a";
+  }
+}
+@media screen and (max-width: 1860px) {
+  .be::after {
+    content: "be b";
+  }
+}
+@media screen and (max-width: 1810px) {
+  .be::after {
+    content: "be c";
+  }
+}
+@media screen and (max-width: 1760px) {
+  .be::after {
+    content: "be d";
+  }
+}
+@media screen and (max-width: 1710px) {
+  .be::after {
+    content: "be e";
+  }
+}
+@media screen and (max-width: 1660px) {
+  .be::after {
+    content: "be f";
+  }
+}
+@media screen and (max-width: 1610px) {
+  .be::after {
+    content: "be g";
+  }
+}
+@media screen and (max-width: 1560px) {
+  .be::after {
+    content: "be h";
+  }
+}
+@media screen and (max-width: 1510px) {
+  .be::after {
+    content: "be i";
+  }
+}
+@media screen and (max-width: 1460px) {
+  .be::after {
+    content: "be j";
+  }
+}
+@media screen and (max-width: 1410px) {
+  .be::after {
+    content: "be k";
+  }
+}
+@media screen and (max-width: 1360px) {
+  .be::after {
+    content: "be l";
+  }
+}
+@media screen and (max-width: 1310px) {
+  .be::after {
+    content: "be m";
+  }
+}
+@media screen and (max-width: 1260px) {
+  .be::after {
+    content: "be n";
+  }
+}
+@media screen and (max-width: 1210px) {
+  .be::after {
+    content: "be o";
+  }
+}
+@media screen and (max-width: 1160px) {
+  .be::after {
+    content: "be p";
+  }
+}
+@media screen and (max-width: 1110px) {
+  .be::after {
+    content: "be q";
+  }
+}
+@media screen and (max-width: 1060px) {
+  .be::after {
+    content: "be r";
+  }
+}
+@media screen and (max-width: 1010px) {
+  .be::after {
+    content: "be s";
+  }
+}
+@media screen and (max-width: 960px) {
+  .be::after {
+    content: "be t";
+  }
+}
+@media screen and (max-width: 910px) {
+  .be::after {
+    content: "be u";
+  }
+}
+@media screen and (max-width: 860px) {
+  .be::after {
+    content: "be v";
+  }
+}
+@media screen and (max-width: 810px) {
+  .be::after {
+    content: "be w";
+  }
+}
+@media screen and (max-width: 760px) {
+  .be::after {
+    content: "be x";
+  }
+}
+@media screen and (max-width: 710px) {
+  .be::after {
+    content: "be y";
+  }
+}
+@media screen and (max-width: 660px) {
+  .be::after {
+    content: "be z";
+  }
+}/*# sourceMappingURL=index.css.map */

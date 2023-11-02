@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .y-text {
+      font-size: 6px;
+      fill: #666;
+      text-anchor: end;
+    }
+
+    .x-line {
+      fill: none;
+      stroke-width: 0.5px;
+      stroke: #cccccc;
+    }
+
+    .x-text {
+      text-anchor: middle;
+      font-size: 6px;
+      fill: #666;
+    }
+
+    .data-circle circle {
+      r: 1px;
+      fill: #ffffff;
+      stroke: #00f;
+      stroke-width: 0.5px;
+      cursor: pointer;
+      transition: all 0.5s;
+    }
+
+    .data-circle circle:hover {
+      r: 2px
+    }
+
+    .data-line {
+      fill: none;
+      stroke: #00f;
+      stroke-width: 0.75px;
+    }
+  </style>
+</head>
+
+<body>
+  <svg id="svg" width="1000" height="1000" style="border: 1px solid #666;">
+
+  </svg>
+  <script src="./22.coord.js"></script>
+  <script>
+    draw({
+      id: "#svg",
+      color: "#999999",
+      title: "前端资源周访问量(天)",
+      titleColor: "#f00",
+      yAxis: false,
+      count: 5
+    });
+    const data = [
+      { text: "周一", value: 200 },
+      { text: "周二", value: 550 },
+      { text: "周三", value: 260 },
+      { text: "周四", value: 80 },
+      { text: "周五", value: 40 },
+      { text: "周六", value: 360 },
+      { text: "周日", value: 40 },
+    ]
+
+    function calcUpLimit(maxValue) {
+      const len = (maxValue + "").length
+      const unit = Math.pow(10, len - 1)
+      return maxValue % unit === 0 ? maxValue : (parseInt(maxValue / unit) + 1) * unit
+    }
+    const upLimit = calcUpLimit(Math.max(...data.map(obj => obj.value)))
+
+    const NS = "http://www.w3.org/2000/svg"
+    const svg = document.querySelector("#svg")
+
+    const count = 5
+    const yDataSpace = upLimit / count
+    const ySpace = 200 / count
+
+    let g = document.createElementNS(NS, "g")
+    g.setAttribute("class", "y-text")
+    svg.appendChild(g)
+    for (let i = 0;i <= count;i++) {
+      const text = document.createElementNS(NS, "text")
+      text.innerHTML = yDataSpace * i
+      text.setAttribute("x", 20)
+      text.setAttribute("y", 225 - ySpace * i)
+      g.appendChild(text)
+    }
+    const xSpace = 200 / data.length
+    g = document.createElementNS(NS, "g")
+    g.className = "x-line"
+    svg.appendChild(g)
+    let d = ""
+    for (let i = 0;i <= data.length;i++) {
+      d += `M${25 + i * xSpace} 225 V230`
+    }
+    const path = document.createElementNS(NS, "path")
+    path.setAttribute("d", d)
+    path.setAttribute("stroke", "#666666")
+    path.setAttribute("stroke-width", "0.5px")
+    g.appendChild(path)
+
+    g = document.createElementNS(NS, "g")
+    g.className = "x-text"
+    svg.appendChild(g)
+    data.map((item, index) => {
+      const text = document.createElementNS(NS, "text")
+      text.innerHTML = item.text
+      text.setAttribute("text-anchor", "middle")
+      text.setAttribute("x", 25 + xSpace / 2 + index * xSpace)
+      text.setAttribute("font-size", "5px")
+      text.setAttribute("y", 232)
+      g.appendChild(text)
+    })
+  </script>
+</body>
+
+</html>

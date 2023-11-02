@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        background: #000;
+        padding: 30px 60px;
+      }
+      .container {
+        color: #ffffff;
+        line-height: 2.5;
+        position: relative;
+      }
+      .eraser {
+        position: absolute;
+        left: 0;
+        top: 0;
+        line-height: 2.5;
+      }
+      .text {
+        --p: 5%;
+        background: linear-gradient(
+          to right,
+          #0000 var(--p),
+          #000 calc(var(--p) + 100px)
+        );
+        color: transparent;
+        animation: erase 5s linear infinite;
+      }
+
+      @property --p {
+        syntax: '<percentage>';
+        initial-value: 0%;
+        inherits: false;
+      }
+      @keyframes erase {
+        to {
+          --p: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae fugit
+        quia cum, sapiente dolorem perferendis saepe minima et. Odit quos
+        repellendus saepe ducimus doloribus tempora vero iusto expedita
+        blanditiis incidunt! Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Provident enim deserunt mollitia veritatis itaque amet tenetur!
+        Consectetur, amet facere cupiditate praesentium libero, vero explicabo,
+        ipsam aperiam incidunt laudantium quidem cum.
+      </p>
+      <p class="eraser">
+        <span class="text">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
+          fugit quia cum, sapiente dolorem perferendis saepe minima et. Odit
+          quos repellendus saepe ducimus doloribus tempora vero iusto expedita
+          blanditiis incidunt! Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Provident enim deserunt mollitia veritatis itaque
+          amet tenetur! Consectetur, amet facere cupiditate praesentium libero,
+          vero explicabo, ipsam aperiam incidunt laudantium quidem cum.
+        </span>
+      </p>
+    </div>
+  </body>
+</html>

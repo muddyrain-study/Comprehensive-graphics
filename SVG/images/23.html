@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+		svg{border:1px solid #ccc;}
+	</style>
+</head>
+<body>
+
+
+	<svg width="200" height="200" viewBox="0 0 100 100">
+        <defs>
+			<filter id="f1">
+			  <feGaussianBlur stdDeviation="0">
+				<animate attributeType="XML"
+				  attributeName="stdDeviation"
+				  to="3"
+				  dur="2s"
+				  begin="t.click"
+				  fill="freeze"/>
+			  </feGaussianBlur>
+			</filter>
+		  </defs>
+
+		  <image id="img1" href="imgs/5.png" x="0" y="0" height="100" width="100" filter="url(#f1)"/>
+		<text x="10" y="60" font-size="8" text-anchor="middle" id="t" style="cursor:pointer;user-select:none">点我</text>
+    </svg>
+	
+
+</body>
+</html>

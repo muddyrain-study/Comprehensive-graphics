@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        background: #000;
+      }
+      canvas {
+        width: 100vw;
+        height: 50vh;
+        display: block;
+        background: #000;
+        border-bottom: 1px solid orange;
+      }
+      .box {
+        margin: 50px auto;
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+    <div class="box"><audio src="../梦的光点-王心凌.mp3" controls></audio></div>
+    <script>
+      let canvas = document.querySelector('canvas');
+      let ctx = canvas.getContext('2d');
+      const audioEle = document.querySelector('audio');
+      function init() {
+        canvas.width = window.innerWidth * devicePixelRatio;
+        canvas.height = (window.innerHeight / 2) * devicePixelRatio;
+      }
+      init();
+
+      let isInit = false;
+      let dataArray, analyser;
+      audioEle.onplay = function () {
+        if (isInit) {
+          return;
+        }
+
+        // 初始化
+        const audCtx = new AudioContext(); // 创建音频上下文
+
+        analyser = audCtx.createAnalyser(); // 创建分析器
+        analyser.fftSize = 512;
+        const source = audCtx.createMediaElementSource(audioEle); // 创建音频源
+        dataArray = new Uint8Array(analyser.frequencyBinCount); // 创建数组
+        source.connect(analyser); // 音频源连接分析器
+        analyser.connect(audCtx.destination); // 分析器连接音频上下文的目标节点
+        isInit = true;
+      };
+
+      function draw() {
+        requestAnimationFrame(draw);
+        // 清空画布
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // 获取音频数据
+        const { width, height } = canvas;
+        if (!isInit) {
+          return;
+        }
+        // 绘制频谱
+        analyser.getByteFrequencyData(dataArray);
+        const length = dataArray.length;
+        const barWidth = width / length;
+        ctx.fillStyle = 'orange';
+        for (let i = 0; i < length; i++) {
+          const data = dataArray[i];
+          const barHeight = (data / length) * height;
+          const x = barWidth * i * 1.5;
+          const y = height - barHeight;
+          ctx.fillRect(x, y, barWidth, barHeight);
+        }
+      }
+      draw();
+    </script>
+  </body>
+</html>

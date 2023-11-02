@@ -1,0 +1,70 @@
+html {
+  height: 100%;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+}
+
+.title {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  color: #ffffff;
+  text-align: center;
+  font-family: "lato", sans-serif;
+  font-weight: 300;
+  font-size: 50px;
+  margin-top: -60px;
+  letter-spacing: 10px;
+  padding-left: 10px;
+  background: linear-gradient(white, #38495a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@function getShadows ($n) {
+  $shadows: "#{random($limit: 100)}vw #{random($limit: 100)}vh #fff";
+
+  @for $i from 2 through $n {
+    $shadows: '#{$shadows},#{random($limit: 100)}vw #{random($limit: 100)}vh #fff'
+  }
+
+  @return unquote($shadows);
+}
+
+$duration: 400s;
+$count :1000;
+
+@for $i from 1 through 3 {
+  $duration: floor($duration / 2);
+  $count : floor($count / 2);
+
+  .layer#{$i} {
+    $size: unquote('#{$i}px');
+    position: fixed;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    box-shadow: getShadows($count);
+    animation: moveUp $duration linear infinite;
+
+    &::after {
+      content: '';
+      position: fixed;
+      top: 100vh;
+      left: 0;
+      width: $size;
+      height: $size;
+      border-radius: inherit;
+      box-shadow: inherit;
+    }
+  }
+
+}
+
+@keyframes moveUp {
+  100% {
+    transform: translateY(-100vh);
+  }
+}

@@ -1,0 +1,47 @@
+.box {
+  width: 500px;
+  height: 500px;
+  margin: 500px auto;
+  border-radius: 50%;
+  border: 1px solid #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.box .inner {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 1px solid #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.box .inner .icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: red;
+  position: absolute;
+}
+.box .inner .icon1 {
+  transform: translate(173.2050807569px, -100px);
+}
+.box .inner .icon2 {
+  transform: translate(173.2050807569px, 100px);
+}
+.box .inner .icon3 {
+  transform: translate(0px, 200px);
+}
+.box .inner .icon4 {
+  transform: translate(-173.2050807569px, 100px);
+}
+.box .inner .icon5 {
+  transform: translate(-173.2050807569px, -100px);
+}
+.box .inner .icon6 {
+  transform: translate(0px, -200px);
+}
+
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,40 @@
+@use "sass:math";
+
+.box {
+  width: 500px;
+  height: 500px;
+  margin: 500px auto;
+  border-radius: 50%;
+  border: 1px solid #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .inner {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 1px solid #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: red;
+      position: absolute;
+    }
+
+    $r: 200px;
+    $count: 6;
+
+    @for $i from 1 through $count {
+      .icon#{$i} {
+        transform: translate(#{$r * math.sin(360deg / $count * $i)}, #{$r * math.cos(360deg / $count * $i) * -1});
+      }
+    }
+  }
+}

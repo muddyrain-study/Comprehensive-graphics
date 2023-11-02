@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      canvas {
+        width: 1000px;
+        height: 1000px;
+        margin: 0 auto;
+      }
+      audio {
+        margin-top: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+    <audio src="../梦的光点-王心凌.mp3" controls></audio>
+    <script>
+      let canvas = document.querySelector('canvas');
+      let ctx = canvas.getContext('2d');
+      let audioEl = document.querySelector('audio');
+      function init() {
+        const size = 1000;
+        canvas.width = size * devicePixelRatio;
+        canvas.height = size * devicePixelRatio;
+        canvas.style.width = canvas.style.height = size + 'px';
+      }
+
+      function draw(points, maxLength, useGradient) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var centerX = canvas.width / 2;
+        var centerY = canvas.height / 2;
+        var radius = 150;
+
+        ctx.beginPath();
+
+        for (var i = 0; i < points.length; i++) {
+          var angle = (((i * 360) / points.length) * Math.PI) / 180;
+          var x = centerX + radius * Math.cos(angle);
+          var y = centerY + radius * Math.sin(angle);
+          ctx.moveTo(x, y);
+          ctx.arc(x, y, 1, 0, 2 * Math.PI);
+
+          var lineLength = Math.min(points[i], maxLength);
+          var lineX = centerX + (radius + lineLength) * Math.cos(angle);
+          var lineY = centerY + (radius + lineLength) * Math.sin(angle);
+          ctx.lineTo(lineX, lineY);
+          const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+          gradient.addColorStop(0, getRandomColor());
+          gradient.addColorStop(0.5, getRandomColor());
+          gradient.addColorStop(1, getRandomColor());
+          ctx.strokeStyle = gradient;
+          ctx.stroke();
+        }
+      }
+
+      init();
+      function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+      draw(
+        Array.from({ length: 512 }).map(() => 0),
+        256,
+        true
+      );
+
+      let isInit = false;
+      let analyser;
+      let buffer = null;
+      audioEl.onplay = function () {
+        if (isInit) {
+          return;
+        }
+        console.log('init');
+        const audioCtx = new AudioContext();
+        // 创建一个音频分析对象，采样的缓冲区大小为4096，输入和输出都是双声道
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 512;
+        buffer = new Uint8Array(analyser.frequencyBinCount);
+
+        const source = audioCtx.createMediaElementSource(audioEl);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        isInit = true;
+      };
+
+      function update() {
+        requestAnimationFrame(update);
+        if (!isInit) return;
+        if (!buffer) return;
+        analyser.getByteFrequencyData(buffer);
+        const offset = Math.floor((buffer.length * 2) / 3);
+        const datas = new Array(offset);
+        for (let i = 0; i < offset; i++) {
+          datas[i] = buffer[i];
+        }
+        draw(datas, 256, true);
+      }
+      update();
+    </script>
+  </body>
+</html>

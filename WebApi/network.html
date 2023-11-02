@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .box {
+        margin: 150px auto;
+        background: red;
+        padding: 50px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <script>
+      console.log(navigator.connection);
+      let connection = navigator.connection;
+      let type = connection.effectiveType;
+      let rtt = connection.rtt;
+      let downlink = connection.downlink;
+      let downlinkMax = connection.downlinkMax;
+      const box = document.querySelector('.box');
+      const h1 = document.createElement('h1');
+      h1.innerHTML = `当前网络类型：${type}`;
+      const h2 = document.createElement('h2');
+      h2.innerHTML = `延迟：${rtt}ms`;
+      const h3 = document.createElement('h3');
+      h3.innerHTML = `下载速度：${downlink} mb/s`;
+      box.appendChild(h1);
+      box.appendChild(h2);
+      box.appendChild(h3);
+    </script>
+  </body>
+</html>
