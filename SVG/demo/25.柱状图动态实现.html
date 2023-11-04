@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./25.coord.css">
+  <style>
+    .data-circle circle {
+      r: 1px;
+      fill: #ffffff;
+      stroke: #00f;
+      stroke-width: 0.5px;
+      cursor: pointer;
+      transition: all 0.5s;
+    }
+
+    .data-circle circle:hover {
+      r: 2px
+    }
+
+    .data-line {
+      fill: none;
+      stroke: #00f;
+      stroke-width: 0.75px;
+    }
+
+    #data-panel {
+      padding: 10px 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      position: absolute;
+      border-radius: 5px;
+      transition: left 0.3s linear, top 0.3s linear, opacity 0.1s ease-in;
+      opacity: 0;
+    }
+
+    .polyline {
+      stroke-dasharray: var(--l);
+      stroke-dashoffset: var(--l);
+      animation: stroke 2s forwards;
+    }
+
+    @keyframes stroke {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <svg id="svg" width="1000" height="1000" style="border: 1px solid #666;">
+  </svg>
+  <div id="data-panel">500</div>
+  <div></div>
+  <script src="./25.coord.js"></script>
+  <script>
+    const data = [
+      {
+        text: "一季度",
+        value: 320
+      },
+      {
+        text: "二季度",
+        value: 620
+      },
+      {
+        text: "三季度",
+        value: 500
+      },
+      {
+        text: "四季度",
+        value: 820
+      }
+    ]
+    const texts = data.map(item => item.text);
+    const values = data.map(item => item.value);
+    const yMax = Math.max(...values);
+    const result = draw({
+      id: "#svg",
+      yAxis: false,
+      color: "#acf",
+      title: "2023年各季度就业人数",
+      xText: texts,
+      yMax,
+      part: 5
+    });
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.classList.add("bar");
+    svg.appendChild(g);
+    values.map((value, i) => {
+      const rect1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      const rect2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      rect1.setAttribute("x", 25 + result.xSpace * i + result.xSpace / 4);
+      rect1.setAttribute("y", 25);
+      rect1.setAttribute("width", result.xSpace / 2);
+      rect1.setAttribute("height", 200);
+      rect1.classList.add("rect-bg");
+
+      rect2.setAttribute("x", 25 + result.xSpace * i + result.xSpace / 4);
+      rect2.setAttribute("y", 225 - value * result.ratio);
+      rect2.setAttribute("width", result.xSpace / 2);
+      rect2.setAttribute("height", value * result.ratio);
+      g.appendChild(rect1);
+      g.appendChild(rect2);
+    })
+
+  </script>
+</body>
+
+</html>
