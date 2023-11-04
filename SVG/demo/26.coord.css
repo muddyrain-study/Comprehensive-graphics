@@ -1,0 +1,35 @@
+.y-text {
+  font-size: 6px;
+  fill: #666;
+  text-anchor: end;
+}
+
+.x-line {
+  fill: none;
+  stroke-width: 0.5px;
+  stroke: #cccccc;
+}
+
+.x-text {
+  text-anchor: middle;
+  font-size: 6px;
+  fill: #666;
+}
+
+.bar {
+  fill: #5c7DD9;
+}
+
+.bar rect {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.bar rect.rect-bg {
+  fill: #cfcfcf;
+  fill-opacity: 0.5;
+}
+
+.bar rect:hover {
+  opacity: 0.8;
+}
