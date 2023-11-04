@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .part polyline {
+      fill: none;
+      stroke-width: 1px;
+    }
+
+    .part text {
+      font-size: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <svg id="svg" width="1000" height="1000" style="border: 1px solid #666;">
+    <circle cx="125" cy="125" r="80" fill="#ccc" fill-opacity="0.65" />
+    <g class="part">
+      <path d="M125 125 L125 45 A80 80 0 0 1 205 125 Z" fill="#00f" />
+      <polyline points="125 125, 185 65 , 190 65" stroke="#00f" />
+      <text x="195" y="68" style="">HTML</text>
+    </g>
+
+    <g class="part">
+      <path d="M125 125 L205 125 A80 80 0 0 1 125 205 Z" fill="#0f0" />
+      <polyline points="125 125, 185 185, 190 185" stroke="#0f0" />
+      <text x="195" y="188" style="">CSS</text>
+    </g>
+
+    <g class="part">
+      <path d="M125 125 L125 205 A80 80 0 0 1 45 125 Z" fill="#f00" />
+      <polyline points="125 125, 65 185, 60 185" stroke="#f00" />
+      <text x="55" y="188" style="" text-anchor="end">Javascript</text>
+    </g>
+
+    <g class="part">
+      <path d="M125 125 L45 125 A80 80 0 0 1 125 45 Z" fill="#0ff" />
+      <polyline points="125 125, 65 65, 60 65" stroke="#0ff" />
+      <text x="55" y="68" style="" text-anchor="end">React</text>
+    </g>
+  </svg>
+  <div id=" data-panel">500</div>
+  <div></div>
+  <script src="./27.coord.js"></script>
+  <script>
+    draw({
+      id: "#svg",
+      title: "前端各课程学习时长",
+    });
+  </script>
+</body>
+
+</html>
