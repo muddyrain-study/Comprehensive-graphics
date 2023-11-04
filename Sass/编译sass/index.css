@@ -1,0 +1,7 @@
+.a {
+  background: red;
+}
+.a .b {
+  text-align: center;
+  background: green;
+}
