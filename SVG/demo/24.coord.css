@@ -1,0 +1,17 @@
+.y-text {
+  font-size: 6px;
+  fill: #666;
+  text-anchor: end;
+}
+
+.x-line {
+  fill: none;
+  stroke-width: 0.5px;
+  stroke: #cccccc;
+}
+
+.x-text {
+  text-anchor: middle;
+  font-size: 6px;
+  fill: #666;
+}
