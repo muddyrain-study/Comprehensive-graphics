@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .part polyline {
+      fill: none;
+      stroke-width: 1px;
+    }
+
+    .part text {
+      font-size: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <svg id="svg" width="1000" height="1000" style="border: 1px solid #666;">
+
+  </svg>
+  <div id=" data-panel">500</div>
+  <div></div>
+  <script src="./30.coord.js"></script>
+  <script>
+    draw({
+      id: "#svg",
+      title: "前端各课程学习时长",
+      yAxis: true,
+      xAxis: true
+    });
+    const data = [
+      {
+        text: "Javascript",
+        value: 200
+      },
+      {
+        text: "HTML5",
+        value: 20
+      },
+      {
+        text: "CSS3",
+        value: 30
+      },
+      {
+        text: "Vue",
+        value: 20
+      },
+      {
+        text: "React",
+        value: 90
+      },
+    ]
+
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.querySelector("#svg");
+    // 总值 deg/360 == value/sum
+    const sum = data.map(item => item.value).reduce((v1, v2) => v1 + v2, 0);
+    const originPoint = { x: 125, y: 125 }
+    // 正常绘制弧的半径
+    const r1 = 80;
+    // 高亮绘制弧的半径
+    const r2 = 82;
+    // 计算提示线的半径
+    const r3 = 85;
+    // 随机颜色
+    function randomColorNumber() {
+      return Math.floor(Math.random() * 256)
+    }
+    function randomColor() {
+      return `rgb(${randomColorNumber()},${randomColorNumber()},${randomColorNumber()})`
+    }
+    // 计算圆弧上的点 (默认右上角象限，与y轴夹角为deg)
+    function calcPoint(origin, r, deg) {
+      return {
+        x: origin.x + Math.sin(deg * Math.PI / 180) * r,
+        y: origin.y - Math.cos(deg * Math.PI / 180) * r
+      }
+    }
+    // 计算提示线的终点所对应的角度
+    function calcDeg(value, sum) {
+      return value / sum * 360
+    }
+
+    let startPoint = [125, 45]
+    let lastDeg = 0
+    // 绘制圆弧
+    data.forEach((item, index) => {
+      if (item.value === 0) return
+      const g = document.createElementNS(NS, "g");
+      g.classList.add("part");
+      svg.appendChild(g);
+
+      const color = randomColor()
+      const path = document.createElementNS(NS, "path");
+      const currentDeg = calcDeg(item.value, sum)
+      const endPoint = calcPoint(originPoint, r1, currentDeg + lastDeg)
+      let d = ''
+      d += `M${originPoint.x},${originPoint.y} `
+      d += `L${startPoint[0]},${startPoint[1]} `
+      d += `A${r1} ${r1} 0 ${currentDeg > 180 ? 1 : 0} 1 ${endPoint.x} ${endPoint.y}`
+      d += "Z"
+      path.setAttribute('fill', color)
+      path.setAttribute("d", d)
+      g.appendChild(path)
+      // 此时第一个弧就绘制结束了 接下来就绘制第二个弧
+      // 第二个弧时 起始点变为上一个弧的终点
+      // 计算第二个弧的终点时，依然要基于y轴角度计算
+      startPoint = [endPoint.x, endPoint.y]
+      lastDeg += currentDeg
+    })
+  </script>
+</body>
+
+</html>
