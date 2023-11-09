@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .part polyline {
+      fill: none;
+      stroke-width: 1px;
+    }
+
+    .part text {
+      font-size: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <svg id="svg" width="1000" height="1000" style="border: 1px solid #666;">
+
+  </svg>
+  <div id=" data-panel">500</div>
+  <div></div>
+  <script src="./29.coord.js"></script>
+  <script>
+    draw({
+      id: "#svg",
+      title: "前端各课程学习时长",
+      yAxis: true,
+      xAxis: true
+    });
+    const data = [
+      {
+        text: "HTML5",
+        value: 20
+      },
+      {
+        text: "CSS3",
+        value: 30
+      },
+      {
+        text: "Javascript",
+        value: 120
+      },
+      {
+        text: "Vue",
+        value: 100
+      },
+      {
+        text: "React",
+        value: 100
+      },
+    ]
+
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.querySelector("#svg");
+    // 总值 deg/360 == value/sum
+    const sum = data.map(item => item.value).reduce((v1, v2) => v1 + v2, 0);
+    const originPoint = { x: 100, y: 100 }
+    // 正常绘制弧的半径
+    const r1 = 80;
+    // 高亮绘制弧的半径
+    const r2 = 82;
+    // 计算提示线的半径
+    const r3 = 85;
+    // 随机颜色
+    function randomColorNumber() {
+      return Math.floor(Math.random() * 256)
+    }
+    function randomColor() {
+      return `rgb(${randomColorNumber()},${randomColorNumber()},${randomColorNumber()})`
+    }
+    // 计算圆弧上的点 (默认右上角象限，与y轴夹角为deg)
+    function calcPoint(origin, r, deg) {
+      return {
+        x: origin.x + Math.sin(deg * Math.PI / 180) * r,
+        y: origin.y - Math.cos(deg * Math.PI / 180) * r
+      }
+    }
+  </script>
+</body>
+
+</html>
