@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .part {
+      cursor: pointer;
+    }
+
+    .part path {
+      transition: all 0.3s;
+    }
+
+    .part polyline {
+      fill: none;
+      stroke-width: 1px;
+    }
+
+    .part text {
+      font-size: 8px;
+    }
+
+    #data-panel {
+      padding: 10px 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      position: absolute;
+      border-radius: 5px;
+      transition: left 0.3s linear, top 0.3s linear, opacity 0.1s ease-in;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <svg id="svg" width="1000" height="1000" style="border: 1px solid #666;">
+
+  </svg>
+  <div id="data-panel">500</div>
+  <div></div>
+  <script src="./31.coord.js"></script>
+  <script>
+    draw({
+      id: "#svg",
+      title: "前端各课程学习时长",
+      yAxis: true,
+      xAxis: true
+    });
+    const data = [
+      {
+        text: "Javascript",
+        value: 20
+      },
+      {
+        text: "HTML5",
+        value: 120
+      },
+      {
+        text: "CSS3",
+        value: 150
+      },
+      {
+        text: "Vue",
+        value: 20
+      },
+      {
+        text: "React",
+        value: 90
+      },
+    ]
+
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.querySelector("#svg");
+    // 总值 deg/360 == value/sum
+    const sum = data.map(item => item.value).reduce((v1, v2) => v1 + v2, 0);
+    const originPoint = { x: 125, y: 125 }
+    // 正常绘制弧的半径
+    const r1 = 80;
+    // 高亮绘制弧的半径
+    const r2 = 82;
+    // 计算提示线的半径
+    const r3 = 85;
+    // 随机颜色
+    function randomColorNumber() {
+      return Math.floor(Math.random() * 256)
+    }
+    function randomColor() {
+      return `rgb(${randomColorNumber()},${randomColorNumber()},${randomColorNumber()})`
+    }
+    // 计算圆弧上的点 (默认右上角象限，与y轴夹角为deg)
+    function calcPoint(origin, r, deg) {
+      return {
+        x: origin.x + Math.sin(deg * Math.PI / 180) * r,
+        y: origin.y - Math.cos(deg * Math.PI / 180) * r
+      }
+    }
+    // 计算提示线的终点所对应的角度
+    function calcDeg(value, sum) {
+      return value / sum * 360
+    }
+
+    let startPoint = [125, 45]
+    let lastDeg = 0
+    // 绘制圆弧
+    data.forEach((item, index) => {
+      if (item.value === 0) return
+      const g = document.createElementNS(NS, "g");
+      g.classList.add("part");
+      g.setAttribute("data-index", index)
+      g.setAttribute("data-value", item.value)
+      g.setAttribute("data-text", item.text)
+
+      svg.appendChild(g);
+
+      const color = randomColor()
+      const path = document.createElementNS(NS, "path");
+      const currentDeg = calcDeg(item.value, sum)
+      const endPoint = calcPoint(originPoint, r1, currentDeg + lastDeg)
+
+      g.setAttribute("currentDeg", currentDeg)
+      g.setAttribute("lastDeg", lastDeg)
+
+      let d = ''
+      d += `M${originPoint.x},${originPoint.y} `
+      d += `L${startPoint[0]},${startPoint[1]} `
+      d += `A${r1} ${r1} 0 ${currentDeg > 180 ? 1 : 0} 1 ${endPoint.x} ${endPoint.y}`
+      d += "Z"
+      path.setAttribute('fill', color)
+      path.setAttribute("d", d)
+      g.appendChild(path)
+
+      // 绘制折线
+      const polyPoint = calcPoint(originPoint, r3, currentDeg / 2 + lastDeg)
+      const polyline = document.createElementNS(NS, "polyline");
+      let points = ''
+      const unit = polyPoint.x > originPoint.x ? 5 : -5
+      points += `${originPoint.x},${originPoint.y} ,`
+      points += `${polyPoint.x},${polyPoint.y} ,`
+      points += `${polyPoint.x + unit},${polyPoint.y}`
+
+      polyline.setAttribute("points", points)
+      polyline.setAttribute("stroke", color)
+      g.appendChild(polyline)
+
+      // 绘制文字
+      const text = document.createElementNS(NS, "text");
+      text.setAttribute("x", polyPoint.x + unit)
+      text.setAttribute("y", polyPoint.y)
+      text.setAttribute("fill", color)
+      text.setAttribute("text-anchor", polyPoint.x > originPoint.x ? "start" : "end")
+      text.setAttribute("dominant-baseline", "middle")
+      text.textContent = item.text
+      g.appendChild(text)
+
+      // 此时第一个弧就绘制结束了 接下来就绘制第二个弧
+      // 第二个弧时 起始点变为上一个弧的终点
+      // 计算第二个弧的终点时，依然要基于y轴角度计算
+      startPoint = [endPoint.x, endPoint.y]
+      lastDeg += currentDeg
+    })
+
+    const panel = document.querySelector("#data-panel")
+    svg.onmouseover = function (e) {
+      if (e.target.parentNode.tagName === "g" && e.target.parentNode.classList.contains("part")) {
+        const currentDeg = +e.target.parentNode.getAttribute("currentDeg")
+        const lastDeg = +e.target.parentNode.getAttribute("lastDeg")
+        const path = e.target.parentNode.querySelector("path")
+        // 显示 panel
+        function show(e) {
+          panel.style.opacity = 1
+          panel.style.left = e.clientX + 5 + "px"
+          panel.style.top = e.clientY + 5 + "px"
+          panel.innerHTML = e.target.parentNode.getAttribute("data-text") + ":" + e.target.parentNode.getAttribute("data-value")
+        }
+        e.target.onmousemove = (e) => {
+          show(e)
+        }
+        // 放大当前的图形
+        function drawArc(origin, r, currentDeg, lastDeg) {
+          const sp = calcPoint(origin, r, lastDeg)
+          const ep = calcPoint(origin, r, currentDeg + lastDeg)
+
+          let d = ''
+          d += `M${origin.x},${origin.y} `
+          d += `L${sp.x},${sp.y} `
+          d += `A${r} ${r} 0 ${currentDeg > 180 ? 1 : 0} 1 ${ep.x} ${ep.y}`
+          d += "Z"
+          path.setAttribute("d", d)
+        }
+        drawArc(originPoint, r3, currentDeg, lastDeg)
+        e.target.parentNode.querySelector("path").setAttribute("d", e.target.parentNode.querySelector("path").getAttribute("d").replace(r1, r2))
+        e.target.onmouseout = function (e) {
+          if (e.target.parentNode.tagName === "g" && e.target.parentNode.classList.contains("part")) {
+            panel.style.opacity = 0
+          }
+          drawArc(originPoint, r1, currentDeg, lastDeg)
+          this.onmousemove = null
+          this.onmouseout = null
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
