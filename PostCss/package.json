@@ -1,6 +1,13 @@
 {
+  "scripts": {
+    "build": "postcss ./index.css -o dist/index.css --watch"
+  },
   "dependencies": {
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31"
+  },
+  "devDependencies": {
+    "cssnano": "^6.0.1",
+    "postcss-cli": "^10.1.0"
   }
 }
