@@ -5,4 +5,6 @@ module.exports = {
     }),
     require('cssnano')({ preset: 'default' }),
   ],
+  syntax: 'postcss-scss',
+  map: { inline: false },
 };

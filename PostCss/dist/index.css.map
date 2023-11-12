@@ -1,0 +1,1 @@
+{"version":3,"sources":["../index.scss"],"names":[],"mappings":"AAAA,QAAS,CAET,KACE,sBAAuB,CAEvB,UAAW,CADX,cAEF,CAEA,MACE,kCAA2B,CAA3B,8BAA2B,CAA3B,0BACF","file":"index.css","sourcesContent":["$red: red;\r\n\r\nbody {\r\n  background-color: beige;\r\n  font-size: 16px;\r\n  color: $red;\r\n}\r\n\r\n.box1 {\r\n  transform: translate(100px);\r\n}"]}

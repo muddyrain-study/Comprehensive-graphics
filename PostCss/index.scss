@@ -1,7 +1,9 @@
+$red: red;
+
 body {
   background-color: beige;
   font-size: 16px;
-  color: red;
+  color: $red;
 }
 
 .box1 {
