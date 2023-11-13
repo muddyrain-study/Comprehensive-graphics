@@ -1,19 +1,22 @@
-import { track, trigger } from './effect.js';
+import { handles } from './handles.js';
+import { isObject } from './utils.js';
+
+// 用于存储响应式对象的属性和依赖之间的关系
+const targetMap = new WeakMap();
 
 export function reactive(target) {
-  return new Proxy(target, {
-    get(target, key) {
-      // 依赖收集
-      track(target, key);
-      // 返回对象的属性值
-      return target[key];
-    },
-    set(target, key, value) {
-      // 派发更新
-      trigger(target, key);
-      // 设置对象的属性值
-      // 赋值返回true 代为成功
-      return Reflect.set(target, key, value);
-    },
-  });
+  if (!isObject(target)) {
+    return target;
+  }
+  // 优化：如果已经代理过了，就不要再次代理了
+  if (targetMap.has(target)) {
+    return targetMap.get(target);
+  }
+
+  const proxy = new Proxy(target, handles);
+
+  // 保存响应式对象和代理对象之间的关系
+  targetMap.set(target, proxy);
+
+  return proxy;
 }
