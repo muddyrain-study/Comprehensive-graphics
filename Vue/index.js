@@ -10,9 +10,10 @@ const obj = {
 const state = reactive(obj);
 
 function fn() {
-  'e' in state;
+  for (const key in state) {
+  }
 }
 
-state.e = 123;
-
 fn();
+
+state.c = 123;
