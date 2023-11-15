@@ -7,10 +7,10 @@ export function track(target, type, key) {
     return;
   }
   // 打印样式改为红色
-  console.log(`%c【${type}】${key}`, 'color: red;');
+  console.log(`%c【${type}】`, 'color: red;', key);
 }
 
 // 派发更新
 export function trigger(target, type, key) {
-  console.log(`%c【${type}】${key}`, 'color: blue;');
+  console.log(`%c【${type}】`, 'color: blue;', key);
 }

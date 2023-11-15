@@ -1,18 +1,12 @@
 import { reactive } from './reactive.js';
 
-const obj = {
-  a: 1,
-  b: 2,
-  c: {
-    d: 3,
-  },
-};
-const state = reactive(obj);
+const obj = {};
+const arr = [1, obj, 3];
+const state = reactive(arr);
 
-function fn() {}
-
+function fn() {
+  const i = state.indexOf(obj);
+  console.log(i);
+}
+console.log(state[1], arr[1]);
 fn();
-
-state.a = 1;
-
-delete state.aaa;
