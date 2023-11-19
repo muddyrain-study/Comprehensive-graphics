@@ -1,7 +1,16 @@
 import { TrackOpTypes } from './operations.js';
-
+let shouldTrack = true;
+export function pauseTracking() {
+  shouldTrack = false;
+}
+export function resumeTracking() {
+  shouldTrack = true;
+}
 // 依赖收集
 export function track(target, type, key) {
+  if (!shouldTrack) {
+    return;
+  }
   if (type === TrackOpTypes.ITERATE) {
     console.log(`%c【${type}】`, 'color: red;');
     return;
