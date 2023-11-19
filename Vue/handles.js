@@ -3,9 +3,18 @@ import { TrackOpTypes, TriggerOpTypes } from './operations.js';
 import { reactive } from './reactive.js';
 import { hasChanged, isObject } from './utils.js';
 
+const arrayInstrumentations = {};
+
+['includes', 'indexOf', 'lastIndexOf'].forEach(key => {
+  arrayInstrumentations[key] = function (...args) {};
+});
+
 function get(target, key, receiver) {
   // 依赖收集
   track(target, TrackOpTypes.GET, key);
+  if (arrayInstrumentations.hasOwnProperty(key) && Array.isArray(target)) {
+    return arrayInstrumentations[key];
+  }
   // 返回对象的属性值
   const result = Reflect.get(target, key, receiver);
 
