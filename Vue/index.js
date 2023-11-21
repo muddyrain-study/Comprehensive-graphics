@@ -1,8 +1,29 @@
+import { effect } from './effect.js';
 import { reactive } from './reactive.js';
 
-const arr = [1, 2, 3, 4, 5, 6];
-const state = reactive(arr);
+const obj = {
+  a: 1,
+  b: 2,
+};
+const state = reactive(obj);
 
-state.pop();
+function fn1() {
+  if (state.a === 1) {
+    state.b;
+  } else {
+    state.c;
+  }
+}
 
-console.log(state);
+// 运行函数 fn1 运行期间用到的所有响应式对象属性，都会收集为对应关系
+effect(fn1);
+
+function fn2() {
+  if (state.a === 1) {
+  } else {
+    state.c;
+  }
+}
+
+// 运行函数 fn1 运行期间用到的所有响应式对象属性，都会收集为对应关系
+effect(fn2);
