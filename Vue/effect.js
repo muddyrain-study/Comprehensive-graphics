@@ -30,10 +30,10 @@ export function track(target, type, key) {
   if (!shouldTrack || !activeEffect) {
     return;
   }
-  // 1. 获取 target 对应的 Map
+  // 获取 target 对应的 Map  存储响应式对象
   let propMap = targetMap.get(target);
   if (!propMap) {
-    // 2. 如果没有，创建一个新的 Map
+    // 如果没有，创建一个新的 Map
     propMap = new Map();
     targetMap.set(target, propMap);
   }
@@ -41,11 +41,13 @@ export function track(target, type, key) {
   if (type === TrackOpTypes.ITERATE) {
     key = ITERATE_KEY;
   }
+  // 存储 类型集合
   let typeMap = propMap.get(key);
   if (!typeMap) {
     typeMap = new Map();
     propMap.set(key, typeMap);
   }
+  // 存储 副作用函数集合
   let depSet = typeMap.get(type);
   if (!depSet) {
     depSet = new Set();
@@ -67,3 +69,6 @@ export function track(target, type, key) {
 export function trigger(target, type, key) {
   console.log(`%c【${type}】`, 'color: blue;', key);
 }
+
+// 获取目标同key同类型的副作用函数
+function getEffectFns(target, type, key) {}
