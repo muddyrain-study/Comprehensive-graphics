@@ -1,2 +1,6 @@
-$red:red;body{background-color:beige;color:$red;font-size:16px}.box1{-webkit-transform:translate(100px);-ms-transform:translate(100px);transform:translate(100px)}
-/*# sourceMappingURL=index.css.map */
+$red:red;body{background-color:beige;color:$red;font-size:16px}
+
+/**
+  * @description
+  * This is a box
+  */.box1{transform:translate(100px)}

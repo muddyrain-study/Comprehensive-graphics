@@ -1,7 +1,17 @@
 module.exports = {
   plugins: [
-    require('autoprefixer')({
-      overrideBrowserslist: 'last 10 versions',
+    require('stylelint')({
+      fix: true,
+    }),
+    require('autoprefixer'),
+    require('cssnano')({
+      preset: [
+        'default',
+        {
+          discardComments: false,
+          discardEmpty: false,
+        },
+      ],
     }),
   ],
 };
