@@ -1,13 +1,16 @@
 .a {
   color: red;
-}
-.a.b {
+
+  &.b {
     color: green;
     transform: translate(100px);
   }
-.a>.b {
+
+  &>.b {
     color: blue;
   }
-.a:hover {
+
+  &:hover {
     color: #000;
   }
+}
