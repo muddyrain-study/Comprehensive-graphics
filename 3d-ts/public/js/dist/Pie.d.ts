@@ -1,4 +1,5 @@
 import { ThreeBase } from './ThreeBase';
+import * as THREE from 'three';
 export interface ChatOptions {
     /**
      * 颜色 单色：['#fff']  渐变：[['#fff','#000']]
@@ -38,6 +39,9 @@ export interface ChatOptions {
 }
 export declare class Pie extends ThreeBase {
     private group;
+    options: ChatOptions;
+    rotation: THREE.Euler;
     constructor(element: HTMLElement, options: ChatOptions);
     private createChat;
+    animateAction(): void;
 }
