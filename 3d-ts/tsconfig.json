@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
-    "types": [
-      "tslib"
-    ],
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "sourceMap": true,
     "outDir": "dist",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declaration": true
   },
   "include": [
     "src/**/*.ts"
