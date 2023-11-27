@@ -13,7 +13,7 @@ export class ThreeBase {
   renderer: THREE.WebGLRenderer | null = null;
   scene: THREE.Scene | null = null;
   camera: THREE.PerspectiveCamera | null = null;
-  initCameraPos = [100, 100, 0];
+  initCameraPos = [80, 100, 0];
   stats: Stats | null = null;
   private isAxis = false;
   private isStats = false;
@@ -65,7 +65,7 @@ export class ThreeBase {
       40,
       this.container.offsetWidth / this.container.offsetHeight,
       1,
-      100000
+      1000
     );
     this.camera.position.set(
       ...(this.initCameraPos as [number, number, number])
