@@ -1,14 +1,17 @@
 {
   "scripts": {
-    "build": "postcss ./index.css -o dist/index.css --watch"
+    "build": "postcss ./src/index.css -o dist/index.css --watch"
   },
   "dependencies": {
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^5.0.0",
+    "color": "^4.2.3",
     "cssnano": "^6.0.1",
     "postcss-cli": "^10.1.0",
+    "postcss-import": "^15.1.0",
     "postcss-preset-env": "^9.3.0",
     "postcss-scss": "^4.0.9",
     "stylelint": "^15.11.0",

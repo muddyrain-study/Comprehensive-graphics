@@ -2,15 +2,12 @@ const postcss = require('postcss');
 const fs = require('fs');
 const autoprefixer = require('autoprefixer');
 
-const css = fs.readFileSync('./index.css', 'utf-8');
+const css = fs.readFileSync('./src/index.css', 'utf-8');
 
-postcss([
-  autoprefixer({
-    overrideBrowserslist: 'last 10 versions',
-  }),
-])
+const myPlugin = require('./my-plugins');
+
+postcss([myPlugin])
   .process(css, { from: undefined })
   .then(result => {
-    console.log(result);
     fs.writeFileSync('./index.out.css', result.css);
   });
