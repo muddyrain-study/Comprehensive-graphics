@@ -5,8 +5,8 @@ const pieInstance = new Pie(
   {
     //颜色
     colors: [
-      ['#498b9d', '#408dad'],
-      ['#f5c067', '#a16c3d'],
+      ['#5dc6dd', '#408dad'],
+      ['#f6c945', '#a16c3d'],
       ['#69ca87', '#3f874f'],
       ['#58a6e3', '#244f85'],
     ],

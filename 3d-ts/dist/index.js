@@ -2,8 +2,8 @@ import { Pie } from './Pie';
 const pieInstance = new Pie(document.getElementById('container'), {
     //颜色
     colors: [
-        ['#4291af', '#327184'],
-        ['#f5c067', '#a16c3d'],
+        ['#5dc6dd', '#408dad'],
+        ['#f6c945', '#a16c3d'],
         ['#69ca87', '#3f874f'],
         ['#58a6e3', '#244f85'],
     ],

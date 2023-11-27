@@ -103,7 +103,7 @@ export class Pie extends ThreeBase {
 
     if (isColorArray(options.colors)) {
       //获取渐变色
-      colors = createGradientColors(options.colors, 40);
+      colors = createGradientColors(options.colors, 20);
       currentColorType = 'gradient';
     }
 
@@ -174,11 +174,11 @@ export class Pie extends ThreeBase {
           }
         };
         // 外圈
-        createOutRing(objGroup, createMaterial(getColor(1)), chatOptions);
+        createOutRing(objGroup, createMaterial(getColor(2)), chatOptions);
         // 内圈
         createInnerRing(objGroup, createMaterial(getColor(2)), chatOptions);
         // 上盖
-        createUpSide(objGroup, createMaterial(getColor(0)), chatOptions);
+        createUpSide(objGroup, createMaterial(getColor(2)), chatOptions);
         // 下盖
         createDownSide(objGroup, createMaterial(getColor(3)), chatOptions);
         // 前面
