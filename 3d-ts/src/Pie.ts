@@ -378,6 +378,8 @@ const createPlane = (
       side: THREE.DoubleSide,
       transparent: true,
     });
+    imageMaterial.blending = THREE.NormalBlending;
+
     // 创建图片几何体
     let imageGeometry = new THREE.PlaneGeometry(options.width, options.height);
     let imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
