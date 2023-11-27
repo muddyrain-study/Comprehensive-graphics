@@ -1,5 +1,5 @@
 import { Pie } from './Pie';
-new Pie(document.getElementById('container'), {
+const pieInstance = new Pie(document.getElementById('container'), {
     //颜色
     colors: [
         ['#4291af', '#327184'],
@@ -15,4 +15,7 @@ new Pie(document.getElementById('container'), {
         { name: '2学', value: 1 },
     ],
     planeImage: '/plane.png',
+});
+window.addEventListener('resize', () => {
+    pieInstance.onResize();
 });

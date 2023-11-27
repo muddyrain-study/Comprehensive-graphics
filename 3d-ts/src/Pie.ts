@@ -60,7 +60,7 @@ export interface ChatOptions {
 export class Pie extends ThreeBase {
   private group: THREE.Group | null = null;
   constructor(element: HTMLElement, options: ChatOptions) {
-    super({ isAxis: true, isStats: false, isRaycaster: false });
+    super({ isAxis: false, isStats: false, isRaycaster: false });
     this.initThree(element);
     this.createChat(options);
   }

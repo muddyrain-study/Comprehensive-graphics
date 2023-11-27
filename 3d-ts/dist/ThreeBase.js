@@ -6,7 +6,7 @@ export class ThreeBase {
     renderer = null;
     scene = null;
     camera = null;
-    initCameraPos = [100, 100, 0];
+    initCameraPos = [80, 100, 0];
     stats = null;
     isAxis = false;
     isStats = false;
@@ -45,7 +45,7 @@ export class ThreeBase {
         // 初始化场景
         this.scene = new THREE.Scene();
         // 初始化相机
-        this.camera = new THREE.PerspectiveCamera(40, this.container.offsetWidth / this.container.offsetHeight, 1, 100000);
+        this.camera = new THREE.PerspectiveCamera(40, this.container.offsetWidth / this.container.offsetHeight, 1, 1000);
         this.camera.position.set(...this.initCameraPos);
         if (this.isAxis) {
             const axesHelper = new THREE.AxesHelper(500);
