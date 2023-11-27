@@ -103,7 +103,7 @@ export class Pie extends ThreeBase {
 
     if (isColorArray(options.colors)) {
       //获取渐变色
-      colors = createGradientColors(options.colors, 20);
+      colors = createGradientColors(options.colors, 40);
       currentColorType = 'gradient';
     }
 
