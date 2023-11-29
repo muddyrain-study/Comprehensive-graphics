@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.item {
+  @apply float-left max-w-[700px] h-40 shadow-md;
+}
+
+.btn {
+  @apply opacity-0 cursor-pointer w-8 h-40 duration-300 transition-width checked:w-56;
+}
+
+
+.bg-img-1 {
+  background: blue;
+  transition: 0.2s ease-in-out all;
+}
+
+.bg-img-2 {
+  background: red;
+  transition: 0.2s ease-in-out all;
+}
+
+.bg-img-3 {
+  background: green;
+  transition: 0.2s ease-in-out all;
+}
+
+.bg-img-4 {
+  background: yellow;
+  transition: 0.2s ease-in-out all;
+}
+
+
+.bg {
+  @apply opacity-0 absolute top-0 left-0 w-screen h-screen -z-50 blur-[2.5px];
+}

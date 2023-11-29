@@ -13,5 +13,10 @@ module.exports = {
       },
     },
   },
+  variants: {
+    extend: {
+      opacity: ['peer-checked'],
+    },
+  },
   plugins: [loadingPlugins, require('@tailwindcss/typography')],
 };
