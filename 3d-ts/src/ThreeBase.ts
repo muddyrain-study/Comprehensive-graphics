@@ -13,21 +13,24 @@ export class ThreeBase {
   renderer: THREE.WebGLRenderer | null = null;
   scene: THREE.Scene | null = null;
   camera: THREE.PerspectiveCamera | null = null;
-  initCameraPos = [80, 100, 0];
+  initCameraPos = [80, 60, 0];
   stats: Stats | null = null;
   private isAxis = false;
   private isStats = false;
   private isRaycaster = false;
+  private isOrbitControls = false;
   controls: OrbitControls | null = null;
   threeAnimation: number | null = null;
   constructor(options: {
     isAxis: boolean;
     isStats: boolean;
     isRaycaster: boolean;
+    isOrbitControls: boolean;
   }) {
     this.isAxis = options.isAxis;
     this.isStats = options.isStats;
     this.isRaycaster = options.isRaycaster;
+    this.isOrbitControls = options.isOrbitControls;
   }
 
   // 初始化3d
@@ -86,8 +89,9 @@ export class ThreeBase {
     if (this.isRaycaster) {
       this.initRaycaster();
     }
-
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    if (this.isOrbitControls) {
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    }
 
     const animate = () => {
       this.threeAnimation = requestAnimationFrame(animate);

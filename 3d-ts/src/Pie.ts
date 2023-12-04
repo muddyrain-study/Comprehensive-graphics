@@ -56,13 +56,22 @@ export interface ChatOptions {
    * 平面图片
    */
   planeImage?: string;
+  /**
+   * 是否支持轨道控制器
+   */
+  isOrbitControls?: boolean;
 }
 export class Pie extends ThreeBase {
   private group: THREE.Group | null = null;
   options: ChatOptions;
   rotation = new THREE.Euler(0, 0.001, 0);
   constructor(element: HTMLElement, options: ChatOptions) {
-    super({ isAxis: false, isStats: false, isRaycaster: false });
+    super({
+      isAxis: false,
+      isStats: false,
+      isRaycaster: false,
+      isOrbitControls: false,
+    });
     this.options = options;
     this.initThree(element);
     this.createChat(options);
