@@ -60,6 +60,10 @@ export interface ChatOptions {
    * 是否支持轨道控制器
    */
   isOrbitControls?: boolean;
+  /**
+   * 是否禁止上下旋转
+   */
+  isDisabledUpRotate?: boolean;
 }
 export class Pie extends ThreeBase {
   private group: THREE.Group | null = null;
@@ -70,7 +74,8 @@ export class Pie extends ThreeBase {
       isAxis: false,
       isStats: false,
       isRaycaster: false,
-      isOrbitControls: false,
+      isOrbitControls: options.isOrbitControls,
+      isDisabledUpRotate: options.isDisabledUpRotate,
     });
     this.options = options;
     this.initThree(element);

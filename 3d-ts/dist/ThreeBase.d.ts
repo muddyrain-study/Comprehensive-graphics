@@ -17,6 +17,7 @@ export declare class ThreeBase {
     private isStats;
     private isRaycaster;
     private isOrbitControls;
+    private isDisabledUpRotate;
     controls: OrbitControls | null;
     threeAnimation: number | null;
     constructor(options: {
@@ -24,6 +25,7 @@ export declare class ThreeBase {
         isStats: boolean;
         isRaycaster: boolean;
         isOrbitControls: boolean;
+        isDisabledUpRotate: boolean;
     });
     initThree(el: HTMLElement): void;
     initRaycaster(): void;

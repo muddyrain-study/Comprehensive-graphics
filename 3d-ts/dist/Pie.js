@@ -12,7 +12,8 @@ export class Pie extends ThreeBase {
             isAxis: false,
             isStats: false,
             isRaycaster: false,
-            isOrbitControls: false,
+            isOrbitControls: options.isOrbitControls,
+            isDisabledUpRotate: options.isDisabledUpRotate,
         });
         this.options = options;
         this.initThree(element);

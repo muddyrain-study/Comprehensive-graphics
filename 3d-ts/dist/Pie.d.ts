@@ -40,6 +40,10 @@ export interface ChatOptions {
      * 是否支持轨道控制器
      */
     isOrbitControls?: boolean;
+    /**
+     * 是否禁止上下旋转
+     */
+    isDisabledUpRotate?: boolean;
 }
 export declare class Pie extends ThreeBase {
     private group;
