@@ -89,9 +89,9 @@ export class ThreeBase {
     if (this.isRaycaster) {
       this.initRaycaster();
     }
-    if (this.isOrbitControls) {
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    }
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableDamping = true;
+    this.controls.enabled = this.isOrbitControls;
 
     const animate = () => {
       this.threeAnimation = requestAnimationFrame(animate);

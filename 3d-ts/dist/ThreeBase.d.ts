@@ -16,12 +16,14 @@ export declare class ThreeBase {
     private isAxis;
     private isStats;
     private isRaycaster;
+    private isOrbitControls;
     controls: OrbitControls | null;
     threeAnimation: number | null;
     constructor(options: {
         isAxis: boolean;
         isStats: boolean;
         isRaycaster: boolean;
+        isOrbitControls: boolean;
     });
     initThree(el: HTMLElement): void;
     initRaycaster(): void;

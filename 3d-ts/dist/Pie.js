@@ -8,7 +8,12 @@ export class Pie extends ThreeBase {
     options;
     rotation = new THREE.Euler(0, 0.001, 0);
     constructor(element, options) {
-        super({ isAxis: false, isStats: false, isRaycaster: false });
+        super({
+            isAxis: false,
+            isStats: false,
+            isRaycaster: false,
+            isOrbitControls: false,
+        });
         this.options = options;
         this.initThree(element);
         this.createChat(options);

@@ -36,6 +36,10 @@ export interface ChatOptions {
      * 平面图片
      */
     planeImage?: string;
+    /**
+     * 是否支持轨道控制器
+     */
+    isOrbitControls?: boolean;
 }
 export declare class Pie extends ThreeBase {
     private group;

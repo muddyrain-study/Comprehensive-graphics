@@ -6,17 +6,19 @@ export class ThreeBase {
     renderer = null;
     scene = null;
     camera = null;
-    initCameraPos = [80, 100, 0];
+    initCameraPos = [80, 60, 0];
     stats = null;
     isAxis = false;
     isStats = false;
     isRaycaster = false;
+    isOrbitControls = false;
     controls = null;
     threeAnimation = null;
     constructor(options) {
         this.isAxis = options.isAxis;
         this.isStats = options.isStats;
         this.isRaycaster = options.isRaycaster;
+        this.isOrbitControls = options.isOrbitControls;
     }
     // 初始化3d
     initThree(el) {
@@ -61,6 +63,8 @@ export class ThreeBase {
             this.initRaycaster();
         }
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableDamping = true;
+        this.controls.enabled = this.isOrbitControls;
         const animate = () => {
             this.threeAnimation = requestAnimationFrame(animate);
             this.renderer.render(this.scene, this.camera);
