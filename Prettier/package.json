@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "formate": "prettier --write ."
+    "formate": "prettier --write .",
+    "formatecli": "formatecli"
   },
   "keywords": [],
   "author": "",
