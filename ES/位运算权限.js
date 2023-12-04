@@ -1,0 +1,9 @@
+const READ = 1;
+const WRITE = 10;
+const EXECUTE = 100;
+const ALL = READ | WRITE | EXECUTE;
+const NONE = 0;
+const READ_WRITE = READ | WRITE;
+const READ_EXECUTE = READ | EXECUTE;
+const WRITE_EXECUTE = WRITE | EXECUTE;
+const READ_WRITE_EXECUTE = READ | WRITE | EXECUTE;
