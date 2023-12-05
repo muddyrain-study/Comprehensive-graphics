@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Road Detection</title>
+  <style>
+    #map {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script src="https://webapi.amap.com/maps?v=1.4.15&key=b17c0a9fae99293ca0d532f78f891169"></script>
+  <script>
+    // 道路的折线坐标点
+
+    var roadPoints = [
+      [
+        116.478928,
+        39.997761
+      ],
+      [
+        116.478907,
+        39.998422
+      ],
+      [
+        116.479384,
+        39.998546
+      ],
+      [
+        116.481053,
+        39.998204
+      ],
+      [
+        116.481793,
+        39.997868
+      ],
+      [
+        116.482898,
+        39.998217
+      ],
+      [
+        116.483789,
+        39.999063
+      ],
+      [
+        116.484674,
+        39.999800
+      ]
+    ]
+    // 汽车的位置信息
+    var carPosition = [116.481987, 39.997738];
+
+    // 创建地图实例
+    var map = new AMap.Map('map', {
+      zoom: 15,
+      center: roadPoints[0]
+    });
+
+    // 绘制道路折线
+    var polyline = new AMap.Polyline({
+      path: JSON.parse(JSON.stringify(roadPoints)),
+      strokeColor: '#FF0000',
+      strokeWeight: 3
+    });
+    polyline.setMap(map);
+
+    // 绘制汽车
+    var carMarker = new AMap.Marker({
+      position: carPosition,
+      icon: 'https://webapi.amap.com/images/car.png',
+      offset: new AMap.Pixel(-26, -13),
+      autoRotation: true,
+      angle: -90,
+      map: map
+    });
+
+    // 判断汽车是否经过或走过了道路
+    for (var i = 0;i < roadPoints.length - 1;i++) {
+      var p1 = roadPoints[i];
+      var p2 = roadPoints[i + 1];
+      var distance = pointToLineDistance(carPosition, p1, p2);
+      if (distance < 0.0001) { // 设定阈值为0.0001度（约等于11米）
+        console.log("汽车经过了道路");
+        break;
+      }
+    }
+
+    // 计算点到线的距离
+    function pointToLineDistance(point, lineStart, lineEnd) {
+      var x0 = point[0];
+      var y0 = point[1];
+      var x1 = lineStart[0];
+      var y1 = lineStart[1];
+      var x2 = lineEnd[0];
+      var y2 = lineEnd[1];
+      return Math.abs((y2 - y1) * x0 - (x2 - x1) * y0 + x2 * y1 - y2 * x1) / Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
+    }
+  </script>
+</body>
+
+</html>
