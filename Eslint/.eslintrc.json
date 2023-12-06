@@ -1,0 +1,13 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "plugins": [
+    "custom"
+  ],
+  "rules": {
+    "custom/no-console-log": "error",
+    "custom/no-alert": "error"
+  }
+}

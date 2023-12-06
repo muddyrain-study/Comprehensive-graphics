@@ -1,8 +1,3 @@
-const hello = 'world';
-console.log(hello);
+alert('哈哈哈');
 
-function sayHello(name) {
-  console.log('Hello, ' + name + '!');
-}
-
-sayHello('world');
+console.log('哈哈哈');
