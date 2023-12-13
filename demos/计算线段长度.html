@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>计算路径的真实地理公里数</title>
+  <script src="https://webapi.amap.com/maps?v=1.4.15&key=b17c0a9fae99293ca0d532f78f891169"></script>
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <label for="path-input">请输入路径（格式：[[经度1, 纬度1], [经度2, 纬度2], ...]）：</label>
+  <input type="text" id="path-input">
+  <button onclick="calculateDistance()">计算</button>
+  <p id="result"></p>
+  <div id="map"></div>
+
+  <script>
+
+
+    var map = new AMap.Map('map', {
+      zoom: 13,
+      center: [116.397499, 39.908722]
+    });
+
+    function calculateDistance() {
+      var pathInput = document.getElementById('path-input');
+      var resultElement = document.getElementById('result');
+
+      // 获取输入的路径
+      var path = pathInput.value;
+
+      // 将输入的路径转换为坐标点数组
+      var points = JSON.parse(path);
+
+      // 将坐标点数组转换为AMap.LngLat对象数组
+      var lnglats = points.map(function (point) {
+        return new AMap.LngLat(point[0], point[1]);
+      });
+
+      // 使用GeometryUtil工具类计算路径的真实地理公里数
+      var distance = AMap.GeometryUtil.distanceOfLine(lnglats);
+
+      resultElement.textContent = '路径的真实地理公里数为：' + distance + '米';
+
+      // 创建折线对象，并添加到地图上
+      var polyline = new AMap.Polyline({
+        path: lnglats,
+        strokeColor: '#3366FF',
+        strokeWeight: 3
+      });
+      polyline.setMap(map);
+
+      // 调整地图视野以适应折线
+      map.setFitView();
+    }
+  </script>
+</body>
+
+</html>
