@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #map {
+      height: 80vh;
+    }
+  </style>
+  <script src="https://webapi.amap.com/maps?v=1.4.15&key=b17c0a9fae99293ca0d532f78f891169"></script>
+</head>
+
+<body>
+  <h1>判断经纬度路径是否相交</h1>
+  <div id="map"></div>
+  <script>
+    // 创建地图对象
+    var map = new AMap.Map('map', {
+      zoom: 13,
+      center: [116.397393, 39.908859]
+    });
+
+    // 创建待判断的两个经纬度路径
+    var path1 = [[121.389067, 31.025605], [121.387934, 31.028563], [121.387649, 31.029274], [121.386878, 31.030754], [121.386533, 31.031424], [121.385763, 31.03283], [121.385514, 31.033206], [121.384969, 31.033884], [121.384116, 31.034968], [121.38344, 31.036164], [121.382758, 31.037447], [121.382116, 31.038667], [121.381831, 31.039261], [121.381739, 31.039598], [121.381375, 31.041328], [121.38188, 31.041524], [121.384953, 31.042785]]
+
+    var path2 = [[121.389067, 31.025605], [121.387934, 31.028563], [121.387649, 31.029274], [121.386878, 31.030754], [121.386533, 31.031424], [121.385763, 31.03283], [121.385514, 31.033206], [121.384969, 31.033884], [121.384116, 31.034968], [121.38344, 31.036164], [121.382758, 31.037447], [121.382116, 31.038667], [121.381831, 31.039261], [121.381739, 31.039598], [121.381375, 31.041328], [121.38188, 31.041524], [121.384953, 31.042785]]
+
+    // 在地图上绘制路径
+    var polyline1 = new AMap.Polyline({
+      path: path1,
+      strokeColor: '#FF0000',
+      strokeWeight: 8
+    });
+    console.log(polyline1);
+    polyline1.setMap(map);
+
+    var polyline2 = new AMap.Polyline({
+      path: path2,
+      strokeColor: '#00FF00',
+      strokeWeight: 8
+    });
+    polyline2.setMap(map);
+    map.setFitView();
+
+    function doesPathIntersect(path1, path2) {
+      // 遍历车子数据
+      for (const item of path2) {
+        // 判断车子的每个点是否在路径上
+        const result = isPointOnLine(item, path1)
+        if (!result) {
+          return false
+        }
+      }
+      return true
+    }
+    // 判断点位是否在指定范围内
+    function isPointOnLine(point, line) {
+      var distance = AMap.GeometryUtil.isPointOnLine(point, line, 20);
+      return distance;
+    }
+
+    const isOk = doesPathIntersect(path1, path2);
+
+    console.log(isOk);
+
+
+  </script>
+</body>
+
+</html>
