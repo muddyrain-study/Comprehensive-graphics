@@ -1,13 +1,15 @@
 const babel = require('@babel/core');
 
-const code = '2 ** 3';
+const code = `const func = async (a) => {
+  console.log(a);
+}`;
 
-const transformPow = require('../plugin1');
+const transformPlugin = require('../plugin2');
 
 babel.transform(
   code,
   {
-    plugins: [transformPow],
+    plugins: [transformPlugin],
   },
   (err, result) => {
     if (err) {
