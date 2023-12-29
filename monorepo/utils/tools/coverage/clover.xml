@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1703821999293" clover="3.2.0">
+  <project timestamp="1703821999293" name="All files">
+    <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2" elements="6" coveredelements="6" complexity="0" loc="2" ncloc="2" packages="1" files="2" classes="2"/>
+    <file name="sub.ts" path="/Users/qiushunmeng/Desktop/开发/GITEE_DEV/Comprehensive-graphics/monorepo/utils/tools/src/sub.ts">
+      <metrics statements="1" coveredstatements="1" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <line num="1" count="1" type="cond" truecount="1" falsecount="0"/>
+    </file>
+    <file name="sum.ts" path="/Users/qiushunmeng/Desktop/开发/GITEE_DEV/Comprehensive-graphics/monorepo/utils/tools/src/sum.ts">
+      <metrics statements="1" coveredstatements="1" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <line num="1" count="1" type="cond" truecount="1" falsecount="0"/>
+    </file>
+  </project>
+</coverage>
