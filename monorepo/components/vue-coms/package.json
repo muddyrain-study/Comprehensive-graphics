@@ -1,10 +1,10 @@
 {
-  "name": "vue-components",
-  "version": "0.1.0",
-  "private": true,
+  "name": "vue-coms",
+  "version": "1.0.0",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:lib": "vue-cli-service build --target lib src/lib.ts && npx vue-tsc --project tsconfig.declarations.json && node generate-index-d-ts.js",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
@@ -12,6 +12,9 @@
     "core-js": "^3.8.3",
     "vue": "^3.2.13"
   },
+  "main": "dist/vue-coms.common.js",
+  "module": "dist/vue-coms.umd.js",
+  "types": "dist/types/index.d.ts",
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -28,6 +31,8 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "jest": "^27.0.5",
+    "sass": "^1.69.7",
+    "sass-loader": "^13.3.3",
     "ts-jest": "^27.0.4",
     "typescript": "~4.5.5"
   }

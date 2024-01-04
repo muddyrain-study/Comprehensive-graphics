@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true, // 要生成类型说明文件
+    "declarationDir": "dist/types", // 类型说明文件的地址
+    "emitDeclarationOnly": true, // 仅生成类型说明文件，不需要生成 js 文件
+    "noEmit": false // 允许编译器输出文件
+  },
+  // 指定要编译的目录
+  "include": [
+    "src/components/**/*.ts",
+    "src/components/**/*.tsx",
+    "src/components/**/*.vue"
+  ],
+  // 排除的目录
+  "exclude": [
+    "node_modules",
+    "tests"
+  ]
+}
