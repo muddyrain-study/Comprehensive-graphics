@@ -38,15 +38,15 @@ export default {
         path: '/about',
       });
     },
-    // handleDataChange(e) {
-    //   console.log('来自子应用的数据--->', e.detail.data);
-    //   //element ui通知
-    //   this.$notify({
-    //     title: 'vue2子应用数据',
-    //     message: e.detail.data.type,
-    //     position: 'top-left'
-    //   })
-    // },
+    handleDataChange(e) {
+      console.log('来自子应用的数据--->', e.detail.data);
+      //element ui通知
+      this.$notify({
+        title: 'vue2子应用数据',
+        message: e.detail.data.type,
+        position: 'top-left',
+      });
+    },
     created() {
       console.log('micro-app元素被创建');
     },
