@@ -13,18 +13,18 @@ const router = new VueRouter({
     },
     {
       //路由路径最好是非严格匹配
-      path: '/app-vue2-demo*',
+      path: '/app-vue2-demo',
       name: 'Vue2DemoPage',
       component: () => import('@/views/Vue2DemoPage.vue'),
     },
     {
       //路由路径最好是非严格匹配
-      path: '/app-react-demo*',
+      path: '/app-react-demo',
       name: 'ReactDemoPage',
       component: () => import('@/views/ReactDemoPage.vue'),
     },
     {
-      path: '/app-vite-demo*',
+      path: '/app-vite-demo',
       name: 'ViteDemoPage',
       component: () => import('@/views/ViteDemoPage.vue'),
     },
