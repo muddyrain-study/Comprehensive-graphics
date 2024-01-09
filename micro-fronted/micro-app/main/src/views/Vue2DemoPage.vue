@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <button @click="sendDataToVue2">主应用主动发送数据给子应用</button> -->
+    <button @click="sendDataToVue2">主应用主动发送数据给子应用</button>
     <!-- 
       name(必传)：应用名称
       url(必传)：应用地址，会被自动补全为http://localhost:4001/index.html
@@ -32,12 +32,12 @@ export default {
     };
   },
   methods: {
-    // sendDataToVue2() {
-    //   microApp.setData('app-vue2-demo', {
-    //     type: '主应用发送新的数据',
-    //     path: '/about'
-    //   })
-    // },
+    sendDataToVue2() {
+      microApp.setData('app-vue2-demo', {
+        type: '主应用发送新的数据',
+        path: '/about',
+      });
+    },
     // handleDataChange(e) {
     //   console.log('来自子应用的数据--->', e.detail.data);
     //   //element ui通知
@@ -48,19 +48,19 @@ export default {
     //   })
     // },
     created() {
-      // console.log('micro-app元素被创建');
+      console.log('micro-app元素被创建');
     },
     beforemount() {
-      // console.log('即将被渲染');
+      console.log('即将被渲染');
     },
     mounted() {
-      // console.log('已经渲染完成');
+      console.log('已经渲染完成');
     },
     unmount() {
-      // console.log('已经卸载');
+      console.log('已经卸载');
     },
     error() {
-      // console.log('渲染出错');
+      console.log('渲染出错');
     },
   },
 };

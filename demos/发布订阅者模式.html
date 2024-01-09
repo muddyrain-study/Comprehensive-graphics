@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class EventCenter {
+      eventList = new Map()
+
+      on(name, fn) {
+        let event = this.eventList.get(name)
+        if (!event) {
+          event = {
+            name,
+            fnList: new Set()
+          }
+          this.eventList.set(name, event)
+        }
+        event.fnList.add(fn)
+      }
+
+      dispatch(name, data) {
+        const event = this.eventList.get(name)
+        if (event) {
+          event.fnList.forEach(fn => {
+            fn(data)
+          })
+        }
+      }
+
+      off(name, fn) {
+        const event = this.eventList.get(name)
+        if (event) {
+          event.fnList.delete(fn)
+        }
+      }
+    }
+    const eventCenter = new EventCenter()
+    eventCenter.on('click', () => {
+      console.log('click11')
+    })
+    eventCenter.on('click', () => {
+      console.log('click22')
+    })
+
+    setTimeout(() => {
+      eventCenter.dispatch("click")
+    }, 2000);
+
+  </script>
+</body>
+
+</html>
