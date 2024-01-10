@@ -5,14 +5,30 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "build:ts": "npx rollup -c rollup.config.ts --configPlugin typescript"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.23.7",
+    "@babel/plugin-transform-runtime": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "rollup": "^4.9.4",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.23.8",
+    "@babel/runtime-corejs3": "^7.23.8"
   }
 }
