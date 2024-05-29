@@ -2,6 +2,7 @@
 	"devDependencies": {
 		"@types/stats.js": "^0.17.3",
 		"@types/three": "^0.158.3",
+		"prettier": "^3.2.5",
 		"stats.js": "^0.17.0",
 		"tslib": "^2.6.2"
 	}
