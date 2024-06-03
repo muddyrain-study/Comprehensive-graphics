@@ -9,20 +9,41 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <style>
-      canvas{
+      canvas {
         border: 1px solid #ccc;
-        display: block;
-        width: 300px;
-        height: 300px;
       }
     </style>
   </head>
   <body>
-    <canvas id="c1" width="400" height="400"></canvas>
-    <canvas></canvas>
-    <canvas></canvas>
     <script>
-   
+      (()=>{
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        document.body.appendChild(canvas);
+        // 实心矩形
+        context.fillStyle = "red";
+        context.fillRect(10, 10, 100, 100);
+      })();
+      (()=>{
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        document.body.appendChild(canvas);
+        // 实心矩形
+        context.strokeStyle = "red";
+        context.strokeRect(10, 10, 100, 100);
+      })();
+
+      (()=>{
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        document.body.appendChild(canvas);
+        context.rect(10,10,100,100)
+        context.fillStyle = 'red'
+        context.fill()
+        context.strokeStyle = 'blue'
+        context.lineWidth = 5
+        context.stroke()
+      })()
     </script>
   </body>
 </html>
