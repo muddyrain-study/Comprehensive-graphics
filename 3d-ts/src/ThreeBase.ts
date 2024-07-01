@@ -1,6 +1,7 @@
-import * as THREE from 'three';
-import Stats from 'three/examples/jsm/libs/stats.module.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import * as THREE from "three";
+import Stats from "three/examples/jsm/libs/stats.module.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { Raycaster } from "three";
 // 声明全局变量
 declare global {
   interface Window {
@@ -22,6 +23,8 @@ export class ThreeBase {
   private isDisabledUpRotate = false;
   controls: OrbitControls | null = null;
   threeAnimation: number | null = null;
+  private raycaster: Raycaster;
+  private mouse: THREE.Vector2;
   constructor(options: {
     isAxis: boolean;
     isStats: boolean;
@@ -57,7 +60,7 @@ export class ThreeBase {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(
       this.container.offsetWidth,
-      this.container.offsetHeight
+      this.container.offsetHeight,
     );
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -66,15 +69,19 @@ export class ThreeBase {
     this.container.appendChild(this.renderer.domElement);
     // 初始化场景
     this.scene = new THREE.Scene();
+    // 初始化射线
+    this.raycaster = new THREE.Raycaster();
+    // 初始化鼠标
+    this.mouse = new THREE.Vector2(1, 1);
     // 初始化相机
     this.camera = new THREE.PerspectiveCamera(
       40,
       this.container.offsetWidth / this.container.offsetHeight,
       1,
-      1000
+      1000,
     );
     this.camera.position.set(
-      ...(this.initCameraPos as [number, number, number])
+      ...(this.initCameraPos as [number, number, number]),
     );
 
     if (this.isAxis) {
@@ -84,8 +91,8 @@ export class ThreeBase {
 
     if (this.isStats) {
       this.stats = new Stats();
-      this.stats.dom.style.position = 'absolute';
-      this.stats.dom.style.top = '0px';
+      this.stats.dom.style.position = "absolute";
+      this.stats.dom.style.top = "0px";
       this.container.appendChild(this.stats.dom);
     }
 
@@ -110,11 +117,27 @@ export class ThreeBase {
       this.controls.update();
       this.animateAction();
     };
-
     animate();
   }
   // 初始化射线
-  initRaycaster() {}
+  initRaycaster() {
+    const handleEvent = (event: MouseEvent) => {
+      // 获取容器的尺寸和位置
+      const rect = this.container.getBoundingClientRect();
+      // 计算鼠标在容器中的坐标
+      this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      // 使用 Raycaster 发出射线
+      this.raycaster.setFromCamera(this.mouse, this.camera);
+      const intersects = this.raycaster.intersectObjects(this.scene.children);
+      if (intersects.length > 0) {
+        const obj = intersects[0].object.parent;
+        const data = obj.userData;
+        console.log(data);
+      }
+    };
+    this.container.addEventListener("pointerdown", handleEvent, false);
+  }
 
   // 执行动画动作
   animateAction() {}
@@ -132,7 +155,7 @@ export class ThreeBase {
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(
         this.container.offsetWidth,
-        this.container.offsetHeight
+        this.container.offsetHeight,
       );
     }
   }

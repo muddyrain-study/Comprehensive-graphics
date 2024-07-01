@@ -1,5 +1,5 @@
-import { ThreeBase } from './ThreeBase';
-import * as THREE from 'three';
+import { ThreeBase } from "./ThreeBase";
+import * as THREE from "three";
 export interface ChatOptions {
     /**
      * 颜色 单色：['#fff']  渐变：[['#fff','#000']]
@@ -40,6 +40,10 @@ export interface ChatOptions {
      * 是否支持轨道控制器
      */
     isOrbitControls?: boolean;
+    /**
+     * 是否禁止上下旋转
+     */
+    isDisabledUpRotate?: boolean;
 }
 export declare class Pie extends ThreeBase {
     private group;

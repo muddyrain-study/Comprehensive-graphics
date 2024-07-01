@@ -1,5 +1,5 @@
-import { ThreeBase } from './ThreeBase';
-import * as THREE from 'three';
+import { ThreeBase } from "./ThreeBase";
+import * as THREE from "three";
 import {
   createBasicMaterial,
   createGradientColors,
@@ -7,7 +7,7 @@ import {
   getDrawColors,
   isArrayWithHexColors,
   isColorArray,
-} from './utils';
+} from "./utils";
 
 // 加载图片纹理
 let textureLoader = new THREE.TextureLoader();
@@ -73,7 +73,7 @@ export class Pie extends ThreeBase {
     super({
       isAxis: false,
       isStats: false,
-      isRaycaster: false,
+      isRaycaster: true,
       isOrbitControls: options.isOrbitControls,
       isDisabledUpRotate: options.isDisabledUpRotate,
     });
@@ -107,22 +107,22 @@ export class Pie extends ThreeBase {
     // 颜色组
     let colors = [];
     // 当前颜色类型 simple gradient
-    let currentColorType: 'simple' | 'gradient' = 'simple';
+    let currentColorType: "simple" | "gradient" = "simple";
     // 是否为颜色数组
     if (isArrayWithHexColors(options.colors)) {
       // 获取颜色组
       colors = getDrawColors(options.colors, 10);
-      currentColorType = 'simple';
+      currentColorType = "simple";
     }
 
     if (isColorArray(options.colors)) {
       //获取渐变色
       colors = createGradientColors(options.colors, 20);
-      currentColorType = 'gradient';
+      currentColorType = "gradient";
     }
 
     if (colors.length == 0) {
-      throw new Error('颜色配置错误');
+      throw new Error("颜色配置错误");
     }
     let { baseHeight, maxHeight, outerRadius, innerRadius } = options;
     let sum = 0;
@@ -146,13 +146,27 @@ export class Pie extends ThreeBase {
     let allHeight = maxHeight - baseHeight;
 
     let group = new THREE.Group();
+    group.name = "pie_group";
     this.group = group;
     this.scene.add(group);
     const spacing = 5;
+    if (!Array.isArray(options.data) || !options.data.length) {
+      console.error("数据格式错误");
+      return;
+    }
+    if (options.planeImage) {
+      // 创建平面
+      createPlane(this.group, {
+        width: 100,
+        image: options.planeImage,
+      });
+    }
     // 创建饼图
     for (let index = 0; index < options.data.length; index++) {
+      const name = options.data[index].name;
       let objGroup = new THREE.Group();
-      objGroup.name = 'pie_group_' + index;
+      objGroup.name = `pie_group_` + index;
+      objGroup.userData = options.data[index];
       const targetColor = options.colors[index % options.colors.length];
       let item = options.data[index];
       //角度范围
@@ -170,17 +184,18 @@ export class Pie extends ThreeBase {
         height,
         outerRadius,
         innerRadius,
+        name,
       };
 
       //每个3D组成块组成：扇形柱体加两片矩形面
       if (item.value) {
-        const isSimpleColor = currentColorType === 'simple';
+        const isSimpleColor = currentColorType === "simple";
         const createMaterial = isSimpleColor
           ? createBasicMaterial
           : createLinearGradientMaterial;
         //创建渐变色材质组
         const cs = colors[index % colors.length];
-        const getColor = targetIndex => {
+        const getColor = (targetIndex) => {
           if (isSimpleColor) {
             return cs[targetIndex];
           } else {
@@ -199,21 +214,10 @@ export class Pie extends ThreeBase {
         createFontSlide(objGroup, createMaterial(getColor(4)), chatOptions);
         // 后面
         createEndSlide(objGroup, createMaterial(getColor(4)), chatOptions);
-
-        if (options.planeImage) {
-          // 创建平面
-          createPlane(objGroup, {
-            ...chatOptions,
-            width: 90,
-            height: 90,
-            name: index,
-            image: options.planeImage,
-          });
-        }
-        group.add(objGroup);
       }
       // 每个块的起始点位+角度
       startRadius = angel + startRadius;
+      group.add(objGroup);
     }
   }
   animateAction(): void {
@@ -229,7 +233,7 @@ export class Pie extends ThreeBase {
 const createOutRing = (
   group,
   material,
-  { outerRadius, height, startRadius, offset, angel, name }: ChatOptionsType
+  { outerRadius, height, startRadius, offset, angel, name }: ChatOptionsType,
 ) => {
   //外圈
   let geometry = new THREE.CylinderGeometry(
@@ -240,11 +244,11 @@ const createOutRing = (
     24,
     true,
     startRadius + offset,
-    angel - offset * 2
+    angel - offset * 2,
   );
   let mesh = new THREE.Mesh(geometry, material);
   mesh.position.y = height * 0.5;
-  mesh.name = 'pie_out_' + name;
+  mesh.name = "pie_out_" + name;
   group.add(mesh);
 };
 
@@ -252,7 +256,7 @@ const createOutRing = (
 const createInnerRing = (
   group,
   material,
-  { innerRadius, height, startRadius, offset, angel, name }: ChatOptionsType
+  { innerRadius, height, startRadius, offset, angel, name }: ChatOptionsType,
 ) => {
   let geometry = new THREE.CylinderGeometry(
     innerRadius,
@@ -262,11 +266,11 @@ const createInnerRing = (
     24,
     true,
     startRadius + offset,
-    angel - offset * 2
+    angel - offset * 2,
   );
   let mesh = new THREE.Mesh(geometry, material);
   mesh.position.y = height * 0.5;
-  mesh.name = 'pie_inner_' + name;
+  mesh.name = "pie_inner_" + name;
   group.add(mesh);
 };
 
@@ -282,7 +286,7 @@ const createUpSide = (
     angel,
     height,
     name,
-  }: ChatOptionsType
+  }: ChatOptionsType,
 ) => {
   let geometry = new THREE.RingGeometry(
     innerRadius,
@@ -290,12 +294,12 @@ const createUpSide = (
     32,
     1,
     startRadius + offset,
-    angel - offset * 2
+    angel - offset * 2,
   );
 
   //上盖
   let mesh = new THREE.Mesh(geometry, material);
-  mesh.name = 'pie_up_' + name;
+  mesh.name = "pie_up_" + name;
   mesh.rotateX(-0.5 * Math.PI);
   mesh.rotateZ(-0.5 * Math.PI);
   mesh.position.y = height;
@@ -313,7 +317,7 @@ const createDownSide = (
     angel,
     height,
     name,
-  }: ChatOptionsType
+  }: ChatOptionsType,
 ) => {
   let geometry = new THREE.RingGeometry(
     innerRadius,
@@ -321,11 +325,11 @@ const createDownSide = (
     32,
     1,
     startRadius + offset,
-    angel - offset * 2
+    angel - offset * 2,
   );
 
   let mesh = new THREE.Mesh(geometry, material);
-  mesh.name = 'pie_down_' + name;
+  mesh.name = "pie_down_" + name;
   mesh.rotateX(-0.5 * Math.PI);
   mesh.rotateZ(-0.5 * Math.PI);
   mesh.position.y = 0.001;
@@ -344,7 +348,7 @@ const createFontSlide = (
     name,
     axis,
     angel,
-  }: ChatOptionsType
+  }: ChatOptionsType,
 ) => {
   //侧面1
   const g = new THREE.PlaneGeometry(radiusDiff, height);
@@ -352,7 +356,7 @@ const createFontSlide = (
   plane.position.y = height * 0.5;
   plane.position.x = 0;
   plane.position.z = 0;
-  plane.name = 'pie_front_' + name;
+  plane.name = "pie_front_" + name;
   plane.rotation.y = startRadius + offset + Math.PI * 0.5;
   plane.translateOnAxis(axis, -(innerRadius + 0.5 * radiusDiff));
   group.add(plane);
@@ -370,14 +374,14 @@ const createEndSlide = (
     name,
     axis,
     angel,
-  }: ChatOptionsType
+  }: ChatOptionsType,
 ) => {
   const g = new THREE.PlaneGeometry(radiusDiff, height);
   const plane = new THREE.Mesh(g, material);
   plane.position.y = height * 0.5;
   plane.position.x = 0;
   plane.position.z = 0;
-  plane.name = 'pie_end_' + name;
+  plane.name = "pie_end_" + name;
   plane.rotation.y = startRadius + angel + Math.PI * 0.5 - offset;
   plane.translateOnAxis(axis, -(innerRadius + 0.5 * radiusDiff));
   group.add(plane);
@@ -385,10 +389,10 @@ const createEndSlide = (
 
 const createPlane = (
   group,
-  _options: ChatOptionsType & {
+  _options: {
     width: number;
-    image: ChatOptions['planeImage'];
-  }
+    image: ChatOptions["planeImage"];
+  },
 ) => {
   const options = {
     width: 100,
